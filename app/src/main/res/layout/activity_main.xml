@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/azulFundo"
+    tools:context=".MainActivity">
+
+    <View
+        android:id="@+id/ViewFundo"
+        android:layout_width="300dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="-60dp"
+        android:background="@drawable/aredondado"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/ViewFotoUser"
+        android:layout_width="222dp"
+        android:layout_height="213dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/circo"
+        app:layout_constraintEnd_toEndOf="@+id/ViewFundo"
+        app:layout_constraintStart_toStartOf="@+id/ViewFundo"
+        app:layout_constraintTop_toTopOf="@+id/ViewFundo" />
+
+    <TextView
+        android:id="@+id/nameUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:layout_marginTop="32dp"
+        android:padding="5dp"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:background="@drawable/aredondado_edittext"
+        app:layout_constraintEnd_toEndOf="@+id/ViewFundo"
+        app:layout_constraintStart_toStartOf="@+id/ViewFundo"
+        app:layout_constraintTop_toBottomOf="@+id/ViewFotoUser" />
+
+    <TextView
+        android:id="@+id/coloque_seu"
+        android:layout_width="235dp"
+        android:layout_height="18dp"
+        android:gravity="center_horizontal|top"
+        android:textSize="16sp"
+        android:layout_marginTop="52dp"
+        android:textColor="@color/white"
+        android:text="Your NIckName"
+        app:layout_constraintEnd_toEndOf="@+id/ViewFundo"
+        app:layout_constraintStart_toStartOf="@+id/ViewFundo"
+        app:layout_constraintTop_toBottomOf="@+id/nameUser" />
+
+    <EditText
+        android:id="@+id/NicknameEdit"
+        android:layout_width="244dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="32dp"
+        android:textColor="@color/white"
+        android:background="@drawable/aredondado_edittext"
+        app:layout_constraintTop_toBottomOf="@+id/coloque_seu"
+        app:layout_constraintEnd_toEndOf="@+id/ViewFundo"
+        app:layout_constraintStart_toStartOf="@+id/ViewFundo"/>
+
+    <Button
+        android:id="@+id/btnConsultarUserGit"
+        android:layout_width="185dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="36dp"
+        android:text="ver mais"
+        android:background="@drawable/aredondado"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ViewFundo" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
