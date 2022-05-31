@@ -2,16 +2,18 @@ package com.example.apigithub;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.os.Handler;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,7 +21,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity{
+    //Link api
     private final String URL = "https://api.github.com/users/";
 
     private Retrofit retrofitGit;
@@ -27,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText NicknameEdit;
     private TextView nameUser;
     private ImageView ViewFotoUser;
-    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +40,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ViewFotoUser = findViewById(R.id.ViewFotoUser);
         nameUser = findViewById(R.id.nameUser);
         btnConsultarUserGit = findViewById(R.id.btnConsultarUserGit);
-        progressBar = findViewById(R.id.progressBar);
-
-        //configurando como invisível
-        progressBar.setVisibility(View.GONE);
 
         //configura os recursos do retrofit
         retrofitGit = new Retrofit.Builder()
@@ -49,12 +47,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .addConverterFactory(GsonConverterFactory.create()) //conversor
                 .build();
 
-        btnConsultarUserGit.setOnClickListener(this);
-    }
-    @Override
-    public void onClick(View v) {
-        consultarUser();
+        //metodo para capatr mundança de texto
+        NicknameEdit.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                //metodo obrigatorio
+            }
 
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+              //metodo obrigatorio
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        consultarUser();
+                    }
+                },1000);
+                //Quando o texto for mudado
+
+            }
+        });
+
+        Button btnConsultarUserGit = (Button) findViewById(R.id.btnConsultarUserGit);
+        btnConsultarUserGit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TelaDodos();
+            }
+        });
     }
 
 
@@ -72,8 +93,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Call<UserGit> call= restService.consultaUser(slogin);
         Log.i("Link da Consulta", link);
 
-        //exibindo a progressbar
-        progressBar.setVisibility(View.VISIBLE);
 
         //colocando a requisição na fila para execução
         call.enqueue(new Callback<UserGit>() {
@@ -83,21 +102,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     UserGit  userGit= response.body();
                     nameUser.setText(userGit.getName());
 
-                    Toast.makeText(getApplicationContext(), "User encontrado", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "User encontrado", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "User: "+userGit.getLogin(), Toast.LENGTH_LONG).show();
 
-                    //escondendo a progressbar
-                    progressBar.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<UserGit> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Ocorreu um erro ao tentar consultar o Perfil. Erro: " + t.getMessage(), Toast.LENGTH_LONG).show();
-
-                //escondendo a progressbar
-                progressBar.setVisibility(View.GONE);
             }
         });
+    }
 
+    public  void TelaDodos(){
+        String UserNick = NicknameEdit.getText().toString();
+
+        Intent dadosUser = new Intent(getApplicationContext(), Dados_User.class);
+        dadosUser.putExtra("UserNick",UserNick);
+        startActivity(dadosUser);
     }
 }
