@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity{
                         nameUser.setVisibility(View.VISIBLE);
                         consultarUser();
                     }
-                },3000);//3seg
+                },2000);//2seg
             }
         });
 
@@ -102,9 +102,9 @@ public class MainActivity extends AppCompatActivity{
             public void onResponse(Call<UserGit> call, Response<UserGit> response) {
                 if (response.isSuccessful()) {
                     UserGit  userGit= response.body();
-                    nameUser.setText(userGit.getName());
+                    nameUser.append("Nome!"+userGit.getName());
 
-                        //Toast.makeText(getApplicationContext(), "User encontrado", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "User encontrado", Toast.LENGTH_LONG).show();
                         //Toast.makeText(getApplicationContext(), "User: "+userGit.getLogin(), Toast.LENGTH_LONG).show();
 
                 }
@@ -123,6 +123,6 @@ public class MainActivity extends AppCompatActivity{
         Intent dadosUser = new Intent(getApplicationContext(), Dados_User.class);
         dadosUser.putExtra("UserNick",UserNick);
         startActivity(dadosUser);
-        finish();
+        //finish();
     }
 }

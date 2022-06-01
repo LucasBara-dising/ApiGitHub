@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">ApiGithub</string>
+    <string name="app_name">Api Github</string>
+
+    <string name="TxtMostraHist">Historicos </string>
 </resources>
