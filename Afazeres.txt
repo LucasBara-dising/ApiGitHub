@@ -1,0 +1,8 @@
+A fazeres
+
+colocar Mensgaem de não encontrado caso o user não exista na main
+
+colocar erro se tiver sem net
+
+colocar foto na image view
+

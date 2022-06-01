@@ -17,6 +17,10 @@ public class UserGit {
     @Expose
     private String name;
 
+    @SerializedName("message")
+    @Expose
+    private String message;
+
     public String getLogin() {
         return login;
     }
@@ -41,10 +45,19 @@ public class UserGit {
         this.name = name;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String name) {
+        this.message = message;
+    }
+
     @Override
     public String toString() {
         return "login:" + getLogin() +
-                "\navatar_url" + getAvatar_url()+
-                "\nname:" + getName();
+                "\n avatar_url" + getAvatar_url()+
+                "\n name:" + getName()+
+                "\n message:" + getMessage();
     }
 }

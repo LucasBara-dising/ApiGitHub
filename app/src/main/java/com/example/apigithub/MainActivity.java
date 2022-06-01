@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity{
         nameUser = findViewById(R.id.nameUser);
         btnConsultarUserGit = findViewById(R.id.btnConsultarUserGit);
 
+
         //configura os recursos do retrofit
         retrofitGit = new Retrofit.Builder()
                 .baseUrl(URL)                                       //endereço do webservice
@@ -58,22 +59,23 @@ public class MainActivity extends AppCompatActivity{
             }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //Quando o texto for mudado
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        nameUser.setVisibility(View.VISIBLE);
                         consultarUser();
                     }
-                },1000);
-                //Quando o texto for mudado
-
+                },3000);//3seg
             }
         });
+
 
         Button btnConsultarUserGit = (Button) findViewById(R.id.btnConsultarUserGit);
         btnConsultarUserGit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TelaDodos();
+                TelaDados();
             }
         });
     }
@@ -102,8 +104,8 @@ public class MainActivity extends AppCompatActivity{
                     UserGit  userGit= response.body();
                     nameUser.setText(userGit.getName());
 
-                    //Toast.makeText(getApplicationContext(), "User encontrado", Toast.LENGTH_LONG).show();
-                    Toast.makeText(getApplicationContext(), "User: "+userGit.getLogin(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "User encontrado", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "User: "+userGit.getLogin(), Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -115,11 +117,12 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
-    public  void TelaDodos(){
+    public  void TelaDados(){
         String UserNick = NicknameEdit.getText().toString();
 
         Intent dadosUser = new Intent(getApplicationContext(), Dados_User.class);
         dadosUser.putExtra("UserNick",UserNick);
         startActivity(dadosUser);
+        finish();
     }
 }
