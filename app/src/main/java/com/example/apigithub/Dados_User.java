@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,15 +25,21 @@ public class Dados_User extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dados_user);
-        nameUser = findViewById(R.id.nameUser);
-
-        //Toast.makeText(getApplicationContext(), "User: "+UserNick, Toast.LENGTH_LONG).show();
+        nameUser = findViewById(R.id.txtviewName);
 
         consultarUser();
+
+        TextView btnMostraHiis = (TextView) findViewById(R.id.btnMostraHiis);
+        btnMostraHiis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TelaHistUsers();
+            }
+        });
     }
 
     private void consultarUser() {
-        //pega nickname
+        //pega nickname da outra tela
         Intent NickName = getIntent();
         String UserNick = NickName.getStringExtra("UserNick");
 
@@ -54,15 +62,13 @@ public class Dados_User extends AppCompatActivity {
         call.enqueue(new Callback<UserGit>() {
             @Override
             public void onResponse(Call<UserGit> call, Response<UserGit> response) {
-                Log.i("Teste", "Chegou aqui");
                 if (response.isSuccessful()) {
                     UserGit  userGit= response.body();
 
-                    String name=userGit.getName();
-                    nameUser.setText(userGit.getName());
+                    //dados
+                    nameUser.setText("Nome: "+userGit.getName());
 
-                    //Toast.makeText(getApplicationContext(), "User: "+userGit.getName(), Toast.LENGTH_LONG).show();
-                    Log.i("Name User", userGit.getName());
+
                 }
             }
 
@@ -73,4 +79,8 @@ public class Dados_User extends AppCompatActivity {
         });
     }
 
+    public  void TelaHistUsers(){
+        Intent HistUsers = new Intent(getApplicationContext(), HistoricoUser.class);
+        startActivity(HistUsers);
+    }
 }

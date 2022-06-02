@@ -16,6 +16,9 @@
         android:theme="@style/Theme.ApiGithub"
         tools:targetApi="31">
         <activity
+            android:name=".HistoricoUser"
+            android:exported="false" />
+        <activity
             android:name=".Dados_User"
             android:exported="false" />
         <activity

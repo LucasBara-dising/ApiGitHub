@@ -17,10 +17,18 @@ public class UserGit {
     @Expose
     private String name;
 
-    @SerializedName("message")
-    @Expose
-    private String message;
+    //nessecario para o banco inserir
+    public UserGit(String vUserNick, String vUserName) {
+        this.login=vUserNick;
+        this.name=vUserName;
+    }
 
+    public UserGit() {
+
+    }
+
+
+    //construtores
     public String getLogin() {
         return login;
     }
@@ -45,19 +53,11 @@ public class UserGit {
         this.name = name;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String name) {
-        this.message = message;
-    }
 
     @Override
     public String toString() {
         return "login:" + getLogin() +
                 "\n avatar_url" + getAvatar_url()+
-                "\n name:" + getName()+
-                "\n message:" + getMessage();
+                "\n name:" + getName();
     }
 }

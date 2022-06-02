@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity{
     //Link api
     private final String URL = "https://api.github.com/users/";
 
+    BancoDeDados db=new BancoDeDados(this);
+
     private Retrofit retrofitGit;
     private Button btnConsultarUserGit;
     private EditText NicknameEdit;
@@ -102,11 +104,8 @@ public class MainActivity extends AppCompatActivity{
             public void onResponse(Call<UserGit> call, Response<UserGit> response) {
                 if (response.isSuccessful()) {
                     UserGit  userGit= response.body();
-                    nameUser.append("Nome!"+userGit.getName());
-
-                        Toast.makeText(getApplicationContext(), "User encontrado", Toast.LENGTH_LONG).show();
-                        //Toast.makeText(getApplicationContext(), "User: "+userGit.getLogin(), Toast.LENGTH_LONG).show();
-
+                    nameUser.setText(userGit.getName());
+                    //Toast.makeText(getApplicationContext(), "User encontrado", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -119,10 +118,14 @@ public class MainActivity extends AppCompatActivity{
 
     public  void TelaDados(){
         String UserNick = NicknameEdit.getText().toString();
+        String UserName = nameUser.getText().toString();
+
+        //insert
+        db.addUser(new UserGit(UserNick, UserName));
 
         Intent dadosUser = new Intent(getApplicationContext(), Dados_User.class);
         dadosUser.putExtra("UserNick",UserNick);
         startActivity(dadosUser);
-        //finish();
+        finish();
     }
 }
