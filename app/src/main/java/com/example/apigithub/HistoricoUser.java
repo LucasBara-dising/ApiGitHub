@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,17 +25,28 @@ public class HistoricoUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historico_user);
 
-        //definição do arry que lista os projetos
+        //definição do arry que lista os users
         arrayList = new ArrayList<String>();
         adpater = new ArrayAdapter<String>(HistoricoUser.this, android.R.layout.simple_list_item_1, arrayList);
         ListViewUsers = (ListView) findViewById(R.id.ListViewUsers);
         ListViewUsers.setAdapter(adpater);
 
-        ListaTodosUsers();
+        List<UserGit> TodosUsers = db.ListaTodosUsers();
+
+        //loop para mostrar tudo
+        for (UserGit c : TodosUsers) {
+            //corpo do item list
+            arrayList.add("Nome: " + c.getLogin() + "\n" +
+                    "NickName: " + c.getLogin() + "\n");
+
+            Log.d("List", c.getLogin());
+            adpater.notifyDataSetChanged();
+        }
+        //ListaTodosUsers();
 
 
         //ao clicar no item da lista
-        ListViewUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*ListViewUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String conteudo=(String) ListViewUsers.getItemAtPosition(position);
@@ -51,7 +63,7 @@ public class HistoricoUser extends AppCompatActivity {
                 dadosUser.putExtra("UserNick",UserNick);
                 startActivity(dadosUser);
             }
-        });
+        });*/
     }
 
     public void ListaTodosUsers() {
@@ -63,6 +75,7 @@ public class HistoricoUser extends AppCompatActivity {
             arrayList.add("Nome: " + c.getLogin() + "\n" +
                     "NickName: " + c.getLogin() + "\n");
 
+            Log.d("List", c.getLogin());
             adpater.notifyDataSetChanged();
         }
     }

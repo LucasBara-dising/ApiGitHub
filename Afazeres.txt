@@ -6,3 +6,6 @@ colocar erro se tiver sem net
 
 colocar foto na image view
 
+verificar se banco foi criado 
+suspeita que o user não foi inserido, vefificar se user ja exite
+

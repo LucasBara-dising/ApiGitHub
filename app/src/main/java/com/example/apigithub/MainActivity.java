@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity{
         btnConsultarUserGit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TelaDados();
+                InseriUser();
             }
         });
     }
@@ -104,7 +104,12 @@ public class MainActivity extends AppCompatActivity{
             public void onResponse(Call<UserGit> call, Response<UserGit> response) {
                 if (response.isSuccessful()) {
                     UserGit  userGit= response.body();
-                    nameUser.setText(userGit.getName());
+                    if(userGit.getName()==null){
+                        nameUser.setText(userGit.getLogin());
+                    }
+                    else {
+                        nameUser.setText(userGit.getName());
+                    }
                     //Toast.makeText(getApplicationContext(), "User encontrado", Toast.LENGTH_LONG).show();
                 }
             }
@@ -116,16 +121,35 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
-    public  void TelaDados(){
+    public  void InseriUser(){
         String UserNick = NicknameEdit.getText().toString();
         String UserName = nameUser.getText().toString();
 
-        //insert
-        db.addUser(new UserGit(UserNick, UserName));
+        //seleciona user
+        UserGit  userGit = db.selecionarUser(UserNick);
 
+        //se não existir no banco cadastra
+        if(userGit.getLogin().equals("naoExiste")){
+            //insert
+            db.addUser(new UserGit(UserNick, UserName));
+            TelaDados();
+            Log.d("Main ","Cadastra");
+        }
+        //se ja existir abre a outra tela direto
+        else {
+            TelaDados();
+            Log.d("Main ","Passa direto");
+        }
+
+    }
+
+    //abre tela dados
+    public  void TelaDados(){
+        String UserNick = NicknameEdit.getText().toString();
+
+        //envia nick para outra tela
         Intent dadosUser = new Intent(getApplicationContext(), Dados_User.class);
         dadosUser.putExtra("UserNick",UserNick);
         startActivity(dadosUser);
-        finish();
     }
 }

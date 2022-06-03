@@ -15,7 +15,6 @@ public class BancoDeDados  extends SQLiteOpenHelper {
     public static final String Tabela_User = "tbUsers";
     public static final String Coluna_LoginUser = "LoginUser";
     public static final String Coluna_NomeUser = "nomeUser";
-    public static final String Coluna_Fav = "favorito";
 
     private static final String DATABASE_Nome = "BDGitUsers.db";
     private static final int DATABASE_VERSION = 1;
@@ -51,8 +50,6 @@ public class BancoDeDados  extends SQLiteOpenHelper {
 
         //inseri no banco
         db.insert(Tabela_User, null, values);
-
-        Log.d("Insersao","Login");
         db.close();
     }
 
@@ -63,13 +60,19 @@ public class BancoDeDados  extends SQLiteOpenHelper {
         Cursor cursor=db.query(Tabela_User,
                 new String[]{Coluna_LoginUser, Coluna_NomeUser},
                 Coluna_LoginUser+"=?",new String[]{String.valueOf(login)},null, null, null,null);
-        if(cursor!=null &&  cursor.getCount()>0){
+        if(cursor!=null && cursor.getCount()>0){
             cursor.moveToFirst();
         }
 
-        UserGit userGitEspecifico= new UserGit(cursor.getString(0), cursor.getString(1));
+        else if(cursor.getCount() == 0){
+            UserGit userGitEspecifico= new UserGit("naoExiste", "naoExiste");
+            return userGitEspecifico;
+        }
 
+
+        UserGit userGitEspecifico= new UserGit(cursor.getString(0), cursor.getString(1));
         return userGitEspecifico;
+
     }
 
     //lista Todos

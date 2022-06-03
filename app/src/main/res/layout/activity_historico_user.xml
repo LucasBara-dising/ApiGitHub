@@ -11,6 +11,9 @@
         android:id="@+id/ListViewUsers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:layout_margin="50dp"/>
+        android:layout_margin="50dp"
+        android:background="@color/azulFundo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
