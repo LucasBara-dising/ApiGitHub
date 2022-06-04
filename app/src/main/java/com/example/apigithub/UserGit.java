@@ -17,6 +17,7 @@ public class UserGit {
     @Expose
     private String name;
 
+
     //nessecario para o banco inserir
     public UserGit(String vUserNick, String vUserName) {
         this.login=vUserNick;
@@ -52,6 +53,7 @@ public class UserGit {
     public void setName(String name) {
         this.name = name;
     }
+
 
 
     @Override

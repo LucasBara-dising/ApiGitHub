@@ -2,4 +2,5 @@
     <string name="app_name">Api Github</string>
 
     <string name="TxtMostraHist">Historicos </string>
+    <string name="TxTtodos_users">Todos Users ja pesquisados</string>
 </resources>

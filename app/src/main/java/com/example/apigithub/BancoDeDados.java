@@ -89,7 +89,7 @@ public class BancoDeDados  extends SQLiteOpenHelper {
             do{
                 UserGit userGit= new UserGit();
                 userGit.setLogin(c.getString(0));
-                userGit.setLogin(c.getString(1));
+                userGit.setName(c.getString(1));
 
                 ListaUsers.add(userGit);
 

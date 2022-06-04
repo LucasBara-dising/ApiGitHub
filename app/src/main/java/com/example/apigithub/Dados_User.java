@@ -18,6 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Dados_User extends AppCompatActivity {
 
     private TextView nameUser;
+    private String UserNick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,7 @@ public class Dados_User extends AppCompatActivity {
 
     public  void TelaHistUsers(){
         Intent HistUsers = new Intent(getApplicationContext(), HistoricoUser.class);
+        HistUsers.putExtra("UserNick",UserNick);
         startActivity(HistUsers);
     }
 }

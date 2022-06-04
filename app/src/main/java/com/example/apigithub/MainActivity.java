@@ -2,6 +2,7 @@ package com.example.apigithub;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Handler;
+
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -104,6 +107,7 @@ public class MainActivity extends AppCompatActivity{
             public void onResponse(Call<UserGit> call, Response<UserGit> response) {
                 if (response.isSuccessful()) {
                     UserGit  userGit= response.body();
+
                     if(userGit.getName()==null){
                         nameUser.setText(userGit.getLogin());
                     }
@@ -111,6 +115,17 @@ public class MainActivity extends AppCompatActivity{
                         nameUser.setText(userGit.getName());
                     }
                     //Toast.makeText(getApplicationContext(), "User encontrado", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    //alert para dizer que deu erro
+                    //erro provamnete de limiti de pesquisas
+                    AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                    alert.setTitle("Ops :/");
+                    alert.setMessage("Não foi possivel fazer a busca agora, tente mais tarde");
+                    alert.setPositiveButton("OK",null);
+                    alert.show();
+
+                    btnConsultarUserGit.setEnabled(false);
                 }
             }
 
@@ -122,7 +137,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public  void InseriUser(){
-        String UserNick = NicknameEdit.getText().toString();
+        String UserNick = NicknameEdit.getText().toString().toLowerCase(Locale.ROOT);
         String UserName = nameUser.getText().toString();
 
         //seleciona user
