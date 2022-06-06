@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,24 @@ public class Dados_User extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TelaHistUsers();
+            }
+        });
+
+
+        ImageButton ImbBtnCompartilhar = (ImageButton) findViewById(R.id.ImbBtnCompartilhar);
+        ImbBtnCompartilhar.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                //pega nickname da outra tela
+                Intent NickName = getIntent();
+                String UserNick = NickName.getStringExtra("UserNick");
+
+                //abre intent para compartilagr link do git
+                Intent comp = new Intent(Intent.ACTION_SEND);
+                comp.setType("text/plain");
+                comp.putExtra(Intent.EXTRA_SUBJECT, "Link do GitHub");
+                comp.putExtra(Intent.EXTRA_TEXT,"https://github.com/" + UserNick);
+                startActivity(Intent.createChooser(comp, "Compartilhar para"));
             }
         });
     }
@@ -66,7 +85,6 @@ public class Dados_User extends AppCompatActivity {
 
                     //dados
                     nameUser.setText("Nome: "+userGit.getName());
-
 
                 }
             }

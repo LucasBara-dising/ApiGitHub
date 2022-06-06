@@ -3,7 +3,10 @@ package com.example.apigithub;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -71,7 +74,7 @@ public class MainActivity extends AppCompatActivity{
                         nameUser.setVisibility(View.VISIBLE);
                         consultarUser();
                     }
-                },2000);//2seg
+                },4000);//2seg
             }
         });
 
@@ -88,52 +91,70 @@ public class MainActivity extends AppCompatActivity{
 
     private void consultarUser() {
 
-        //pega nickname
-        String slogin = NicknameEdit.getText().toString().trim();
+        // Verifica o status da conexão de rede
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = null;
+        if (connMgr != null) {
+            networkInfo = connMgr.getActiveNetworkInfo();
+        }
 
-        String link= URL+slogin;
+        if (networkInfo != null && networkInfo.isConnected()){
+            //pega nickname
+            String slogin = NicknameEdit.getText().toString().trim();
 
-        //instanciando a interface
-        RESTService restService = retrofitGit.create(RESTService.class);
+            String link= URL+slogin;
 
-        //passando os dados para consulta
-        Call<UserGit> call= restService.consultaUser(slogin);
-        Log.i("Link da Consulta", link);
+            //instanciando a interface
+            RESTService restService = retrofitGit.create(RESTService.class);
+
+            //passando os dados para consulta
+            Call<UserGit> call= restService.consultaUser(slogin);
+            //Log.i("Link da Consulta", link);
 
 
-        //colocando a requisição na fila para execução
-        call.enqueue(new Callback<UserGit>() {
-            @Override
-            public void onResponse(Call<UserGit> call, Response<UserGit> response) {
-                if (response.isSuccessful()) {
-                    UserGit  userGit= response.body();
+            //colocando a requisição na fila para execução
+            call.enqueue(new Callback<UserGit>() {
+                @Override
+                public void onResponse(Call<UserGit> call, Response<UserGit> response) {
+                    Log.i("Link da Consulta", link);
+                    if (response.isSuccessful()) {
+                        UserGit  userGit= response.body();
 
-                    if(userGit.getName()==null){
-                        nameUser.setText(userGit.getLogin());
+
+                        if(userGit.getName()==null){
+                            nameUser.setText(userGit.getLogin());
+                        }
+                        else {
+                            nameUser.setText(userGit.getName());
+                        }
+                        //Toast.makeText(getApplicationContext(), "User encontrado", Toast.LENGTH_LONG).show();
                     }
-                    else {
-                        nameUser.setText(userGit.getName());
+
+
+                    else{
+                        //alert para dizer que deu erro
+                        //erro de limiti de pesquisas- Limite de 60 por hora
+                        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                        alert.setTitle("Ops :/");
+                        alert.setMessage("Não foi possivel fazer a busca agora, tente mais tarde");
+                        alert.setPositiveButton("OK",null);
+                        alert.show();
+
+                        btnConsultarUserGit.setEnabled(false);
+                        onStop();
                     }
-                    //Toast.makeText(getApplicationContext(), "User encontrado", Toast.LENGTH_LONG).show();
                 }
-                else {
-                    //alert para dizer que deu erro
-                    //erro provamnete de limiti de pesquisas
-                    AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-                    alert.setTitle("Ops :/");
-                    alert.setMessage("Não foi possivel fazer a busca agora, tente mais tarde");
-                    alert.setPositiveButton("OK",null);
-                    alert.show();
 
-                    btnConsultarUserGit.setEnabled(false);
+                @Override
+                public void onFailure(Call<UserGit> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Ocorreu um erro ao tentar consultar o Perfil. Erro: " + t.getMessage(), Toast.LENGTH_LONG).show();
                 }
-            }
-
-            @Override
-            public void onFailure(Call<UserGit> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Ocorreu um erro ao tentar consultar o Perfil. Erro: " + t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+            });
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "Sem Conexão", Toast.LENGTH_LONG).show();
+        }
     }
 
     public  void InseriUser(){
