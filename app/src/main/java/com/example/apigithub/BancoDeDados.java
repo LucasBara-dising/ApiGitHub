@@ -98,5 +98,11 @@ public class BancoDeDados  extends SQLiteOpenHelper {
         return  ListaUsers;
     }
 
+    void ApagaTodosusers(){
+        //estancia para escrita no banco
+        SQLiteDatabase db=this.getWritableDatabase();
 
+        db.delete(Tabela_User, null, null);
+        db.close();
+    }
 }

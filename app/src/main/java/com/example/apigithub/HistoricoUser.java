@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +27,6 @@ public class HistoricoUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historico_user);
 
-        Intent NickName = getIntent();
-        String UserNick = NickName.getStringExtra("UserNick");
-
-        //Log.d("Log ",UserNick);
-
         //definição do arry que lista os users
         arrayList = new ArrayList<String>();
         adpater = new ArrayAdapter<String>(HistoricoUser.this, android.R.layout.simple_list_item_1, arrayList);
@@ -38,7 +34,6 @@ public class HistoricoUser extends AppCompatActivity {
         ListViewUsers.setAdapter(adpater);
 
         ListaTodosUsers();
-
 
         //ao clicar no item da lista
         ListViewUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -49,12 +44,13 @@ public class HistoricoUser extends AppCompatActivity {
                 //vai pegar oq estiver depois do "Nome: " na varaivel conteudo ouseja o login
                 String login=conteudo.substring(10,conteudo.indexOf("Nome"));
 
-                UserGit userGit= db.selecionarUser(String.valueOf(login));
-                String UserNick= String.valueOf(login);
+                //UserGit userGit= db.selecionarUser(String.valueOf(login));
+                //String UserNick= String.valueOf(login);
+
 
                 //manda o login pra tela de detalhes
                 Intent dadosUser = new Intent(getApplicationContext(), Dados_User.class);
-                dadosUser.putExtra("UserNick",UserNick);
+                dadosUser.putExtra("UserNick",login);
                 startActivity(dadosUser);
             }
         });
@@ -63,10 +59,25 @@ public class HistoricoUser extends AppCompatActivity {
         BtnVoltaDados.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent NickName = getIntent();
+                String UserNick = NickName.getStringExtra("UserNick");
+
                 //envia nick para outra tela
                 Intent DadosUser = new Intent(getApplicationContext(), Dados_User.class);
                 DadosUser.putExtra("UserNick",UserNick);
                 startActivity(DadosUser);
+            }
+        });
+
+
+        TextView btnApagaHist= (TextView) findViewById(R.id.btnApagaHist);
+        btnApagaHist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               //apaga historico
+               db.ApagaTodosusers();
+                finish();
+                startActivity(getIntent());
             }
         });
     }
@@ -83,8 +94,4 @@ public class HistoricoUser extends AppCompatActivity {
         }
     }
 
-    //abre tela dados
-    public  void TelaDados(){
-
-    }
 }

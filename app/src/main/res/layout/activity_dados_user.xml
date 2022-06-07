@@ -8,55 +8,163 @@
     android:background="@color/cinza"
     tools:context=".Dados_User">
 
-    <ImageView
-        android:id="@+id/viewFotoUser"
-        android:layout_width="222dp"
-        android:layout_height="213dp"
-        android:layout_marginTop="80dp"
-        android:background="@drawable/circo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="-52dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/viewFotoUser"
+                android:layout_width="222dp"
+                android:layout_height="213dp"
+                android:layout_marginTop="80dp"
+                android:background="@drawable/circo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-    <ImageButton
-        android:id="@+id/ImbBtnCompartilhar"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/share"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <ImageButton
+                android:id="@+id/ImbBtnCompartilhar"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/share"
+                android:scaleType="fitCenter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/btnMostraHiis"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:padding="16dp"
-        android:text="Historico"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txtviewName"
-        style="@style/TxtBase"
-        android:text=""
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewFotoUser" />
-
-    <TextView
-        android:id="@+id/textView4"
-        style="@style/TxtBase"
-        android:text="TextView"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtviewName" />
+            <TextView
+                android:id="@+id/btnMostraHiis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:padding="16dp"
+                android:text="Historico"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
+            <TextView
+                android:id="@+id/twloginUser"
+                style="@style/TxtBase"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewFotoUser" />
+
+            <TextView
+                android:id="@+id/twName"
+                style="@style/TxtBase"
+                android:layout_marginTop="2dp"
+                android:text=""
+                android:textColor="@color/cinzaClaro"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/twloginUser" />
+
+            <TextView
+                android:id="@+id/twbio"
+                style="@style/TxtBase"
+                android:layout_width="match_parent"
+                android:text=""
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/twName" />
+
+            <TextView
+                android:id="@+id/twProjetos"
+                style="@style/TxtBase"
+                android:text=""
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/twbio" />
+
+            <ImageView
+                android:id="@+id/imgSeguidor"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/twSeguidores"
+                app:layout_constraintTop_toBottomOf="@+id/twProjetos"
+                app:srcCompat="@drawable/seguidores" />
+
+            <TextView
+                android:id="@+id/twSeguidores"
+                style="@style/TxtBase"
+                android:layout_marginTop="20dp"
+                android:text=""
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/twProjetos" />
+
+            <TextView
+                android:id="@+id/twSeguindo"
+                style="@style/TxtBase"
+                android:text=""
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/twSeguidores"
+                app:layout_constraintTop_toBottomOf="@+id/twProjetos" />
+
+            <ImageView
+                android:id="@+id/imgPredio"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/twSeguidores"
+                app:layout_constraintTop_toBottomOf="@+id/twSeguidores"
+                app:srcCompat="@drawable/predio" />
+
+
+            <TextView
+                android:id="@+id/twEmpresa"
+                style="@style/TxtBase"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:text=""
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/imgPredio"
+                app:layout_constraintTop_toBottomOf="@+id/imgSeguidor" />
+
+            <ImageView
+                android:id="@+id/imgLocal"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgPredio"
+                app:srcCompat="@drawable/local" />
+
+            <TextView
+                android:id="@+id/twLocalizacao"
+                style="@style/TxtBase"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="25dp"
+                android:text=""
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/imgLocal"
+                app:layout_constraintTop_toBottomOf="@+id/twEmpresa" />
+
+            <TextView
+                android:id="@+id/twUltupdate"
+                style="@style/TxtBase"
+                android:text=""
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/twLocalizacao" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

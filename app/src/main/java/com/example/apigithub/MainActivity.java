@@ -56,8 +56,9 @@ public class MainActivity extends AppCompatActivity{
                 .addConverterFactory(GsonConverterFactory.create()) //conversor
                 .build();
 
+
         //metodo para capatr mundança de texto
-        NicknameEdit.addTextChangedListener(new TextWatcher() {
+        /*NicknameEdit.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 //metodo obrigatorio
             }
@@ -74,15 +75,25 @@ public class MainActivity extends AppCompatActivity{
                         nameUser.setVisibility(View.VISIBLE);
                         consultarUser();
                     }
-                },4000);//2seg
-            }
-        });
+                },2000);//2seg
 
+            }
+        });*/
 
         Button btnConsultarUserGit = (Button) findViewById(R.id.btnConsultarUserGit);
         btnConsultarUserGit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                consultarUser();
+            }
+        });
+
+
+        Button btnVerMais = (Button) findViewById(R.id.btnVerMais);
+        btnVerMais.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
                 InseriUser();
             }
         });
@@ -112,7 +123,7 @@ public class MainActivity extends AppCompatActivity{
             Call<UserGit> call= restService.consultaUser(slogin);
             //Log.i("Link da Consulta", link);
 
-
+            nameUser.setVisibility(View.VISIBLE);
             //colocando a requisição na fila para execução
             call.enqueue(new Callback<UserGit>() {
                 @Override
@@ -128,7 +139,7 @@ public class MainActivity extends AppCompatActivity{
                         else {
                             nameUser.setText(userGit.getName());
                         }
-                        //Toast.makeText(getApplicationContext(), "User encontrado", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "User encontrado", Toast.LENGTH_LONG).show();
                     }
 
 
@@ -137,12 +148,11 @@ public class MainActivity extends AppCompatActivity{
                         //erro de limiti de pesquisas- Limite de 60 por hora
                         AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
                         alert.setTitle("Ops :/");
-                        alert.setMessage("Não foi possivel fazer a busca agora, tente mais tarde");
+                        alert.setMessage("User não encontrado");
                         alert.setPositiveButton("OK",null);
                         alert.show();
 
-                        btnConsultarUserGit.setEnabled(false);
-                        onStop();
+                        onPause();
                     }
                 }
 
@@ -158,6 +168,8 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public  void InseriUser(){
+        consultarUser();
+
         String UserNick = NicknameEdit.getText().toString().toLowerCase(Locale.ROOT);
         String UserName = nameUser.getText().toString();
 
@@ -169,12 +181,10 @@ public class MainActivity extends AppCompatActivity{
             //insert
             db.addUser(new UserGit(UserNick, UserName));
             TelaDados();
-            Log.d("Main ","Cadastra");
         }
         //se ja existir abre a outra tela direto
         else {
             TelaDados();
-            Log.d("Main ","Passa direto");
         }
 
     }

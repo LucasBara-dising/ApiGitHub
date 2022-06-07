@@ -10,8 +10,8 @@
     <View
         android:id="@+id/ViewFundo"
         android:layout_width="300dp"
-        android:layout_height="500dp"
-        android:layout_marginTop="-60dp"
+        android:layout_height="460dp"
+        android:layout_marginTop="-150dp"
         android:background="@drawable/aredondado"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,8 +21,8 @@
 
     <ImageView
         android:id="@+id/ViewFotoUser"
-        android:layout_width="222dp"
-        android:layout_height="213dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/circo"
         app:layout_constraintEnd_toEndOf="@+id/ViewFundo"
@@ -52,7 +52,7 @@
         android:layout_height="18dp"
         android:gravity="center_horizontal|top"
         android:textSize="16sp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="32dp"
         android:textColor="@color/white"
         android:text="Your NIckName"
         app:layout_constraintEnd_toEndOf="@+id/ViewFundo"
@@ -62,25 +62,35 @@
     <EditText
         android:id="@+id/NicknameEdit"
         android:layout_width="244dp"
-        android:layout_height="35dp"
+        android:layout_height="38dp"
         android:layout_marginTop="32dp"
-        android:textColor="@color/white"
-        android:paddingStart="10dp"
         android:background="@drawable/aredondado_edittext"
-        app:layout_constraintTop_toBottomOf="@+id/coloque_seu"
+        android:padding="10dp"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/ViewFundo"
-        app:layout_constraintStart_toStartOf="@+id/ViewFundo"/>
+        app:layout_constraintStart_toStartOf="@+id/ViewFundo"
+        app:layout_constraintTop_toBottomOf="@+id/coloque_seu" />
 
     <Button
         android:id="@+id/btnConsultarUserGit"
         android:layout_width="185dp"
-        android:layout_height="47dp"
+        android:layout_height="48dp"
         android:layout_marginTop="36dp"
-        android:text="ver mais"
         android:background="@drawable/aredondado"
+        android:text="Consulta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ViewFundo"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/ViewFundo" />
+
+    <Button
+        android:id="@+id/btnVerMais"
+        android:layout_width="185dp"
+        android:layout_height="48dp"
+        android:background="@drawable/aredondado"
+        android:text="ver mais"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnConsultarUserGit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

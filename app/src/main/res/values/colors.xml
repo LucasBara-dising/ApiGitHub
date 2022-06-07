@@ -10,6 +10,8 @@
 
     <color name="azulFundo">#023771</color>
     <color name="cinza">#212931</color>
+    <color name="cinzaClaro">#666666</color>
+    <color name="cinzaEscuro">#323232</color>
 
 
 </resources>
