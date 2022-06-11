@@ -5,11 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,8 +17,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Handler;
 
+import java.io.InputStream;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -56,29 +56,6 @@ public class MainActivity extends AppCompatActivity{
                 .addConverterFactory(GsonConverterFactory.create()) //conversor
                 .build();
 
-
-        //metodo para capatr mundança de texto
-        /*NicknameEdit.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {
-                //metodo obrigatorio
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-              //metodo obrigatorio
-            }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //Quando o texto for mudado
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        nameUser.setVisibility(View.VISIBLE);
-                        consultarUser();
-                    }
-                },2000);//2seg
-
-            }
-        });*/
 
         Button btnConsultarUserGit = (Button) findViewById(R.id.btnConsultarUserGit);
         btnConsultarUserGit.setOnClickListener(new View.OnClickListener() {
@@ -128,10 +105,11 @@ public class MainActivity extends AppCompatActivity{
             call.enqueue(new Callback<UserGit>() {
                 @Override
                 public void onResponse(Call<UserGit> call, Response<UserGit> response) {
-                    Log.i("Link da Consulta", link);
                     if (response.isSuccessful()) {
                         UserGit  userGit= response.body();
 
+                        //Uri uri= Uri.parse("https://avatars.githubusercontent.com/u/82176900?v=4");
+                        //ViewFotoUser.setImageURI(uri);
 
                         if(userGit.getName()==null){
                             nameUser.setText(userGit.getLogin());
@@ -141,7 +119,6 @@ public class MainActivity extends AppCompatActivity{
                         }
                         Toast.makeText(getApplicationContext(), "User encontrado", Toast.LENGTH_LONG).show();
                     }
-
 
                     else{
                         //alert para dizer que deu erro
@@ -168,23 +145,29 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public  void InseriUser(){
-        consultarUser();
-
         String UserNick = NicknameEdit.getText().toString().toLowerCase(Locale.ROOT);
-        String UserName = nameUser.getText().toString();
 
-        //seleciona user
-        UserGit  userGit = db.selecionarUser(UserNick);
-
-        //se não existir no banco cadastra
-        if(userGit.getLogin().equals("naoExiste")){
-            //insert
-            db.addUser(new UserGit(UserNick, UserName));
-            TelaDados();
+        if(UserNick.equals("")){
+            Toast.makeText(getApplicationContext(), "Freencha o campo", Toast.LENGTH_LONG).show();
         }
-        //se ja existir abre a outra tela direto
         else {
-            TelaDados();
+            consultarUser();
+
+            String UserName = nameUser.getText().toString();
+
+            //seleciona user
+            UserGit userGit = db.selecionarUser(UserNick);
+
+            //se não existir no banco cadastra
+            if (userGit.getLogin().equals("naoExiste")) {
+                //insert
+                db.addUser(new UserGit(UserNick, UserName));
+                TelaDados();
+            }
+            //se ja existir abre a outra tela direto
+            else {
+                TelaDados();
+            }
         }
 
     }

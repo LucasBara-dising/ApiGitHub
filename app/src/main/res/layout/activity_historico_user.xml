@@ -14,6 +14,7 @@
         android:layout_height="48dp"
         android:layout_margin="15dp"
         android:background="@drawable/volta"
+        android:contentDescription="@string/TxTsetaVolta"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +25,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:padding="14dp"
-        android:text="Limpar Historico"
+        android:text="@string/TxTLimparHistorico"
         android:textColor="@color/cinzaClaro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -54,6 +55,7 @@
         android:backgroundTint="@color/cinza"
         android:divider="@color/cinza"
         android:paddingTop="20dp"
+        style="@style/Theme.MaterialComponents.DayNight"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

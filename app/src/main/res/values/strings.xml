@@ -2,5 +2,11 @@
     <string name="app_name">Api Github</string>
 
     <string name="TxtMostraHist">Historicos </string>
+    <string name="TxtVerMais">Ver Mais </string>
+    <string name="TxtConsulta">Consulta</string>
     <string name="TxTtodos_users">Todos Users ja pesquisados</string>
+    <string name="TxTLimparHistorico">Limpar Historico</string>
+
+    <string name="TxTsetaVolta">Seta Volta</string>
+    <string name="TxTImgGit">Logo Do GitHub</string>
 </resources>

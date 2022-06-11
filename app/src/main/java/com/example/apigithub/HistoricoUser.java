@@ -36,6 +36,7 @@ public class HistoricoUser extends AppCompatActivity {
         ListaTodosUsers();
 
         //ao clicar no item da lista
+        /*ListViewUsers = (ListView) findViewById(R.id.ListViewUsers);
         ListViewUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -44,17 +45,16 @@ public class HistoricoUser extends AppCompatActivity {
                 //vai pegar oq estiver depois do "Nome: " na varaivel conteudo ouseja o login
                 String login=conteudo.substring(10,conteudo.indexOf("Nome"));
 
-                //UserGit userGit= db.selecionarUser(String.valueOf(login));
-                //String UserNick= String.valueOf(login);
-
+                Log.d("User:", login);
 
                 //manda o login pra tela de detalhes
                 Intent dadosUser = new Intent(getApplicationContext(), Dados_User.class);
-                dadosUser.putExtra("UserNick",login);
+                dadosUser.putExtra("User",login);
                 startActivity(dadosUser);
             }
-        });
+        });*/
 
+        //volta para os dados
         ImageButton BtnVoltaDados= (ImageButton) findViewById(R.id.BtnVoltaDados);
         BtnVoltaDados.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,12 +70,14 @@ public class HistoricoUser extends AppCompatActivity {
         });
 
 
+        //button para apagar historico
         TextView btnApagaHist= (TextView) findViewById(R.id.btnApagaHist);
         btnApagaHist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                //apaga historico
                db.ApagaTodosusers();
+               //recarrega a pagina
                 finish();
                 startActivity(getIntent());
             }
@@ -84,6 +86,7 @@ public class HistoricoUser extends AppCompatActivity {
 
     public void ListaTodosUsers() {
         List<UserGit> TodosUsers = db.ListaTodosUsers();
+
         //loop para mostrar tudo
         for (UserGit c : TodosUsers) {
             //corpo do item list
