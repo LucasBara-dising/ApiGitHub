@@ -15,4 +15,9 @@
     <string name="txtIconempresa">Icon Empresa</string>
     <string name="txtIconLocal">Icon Local</string>
     <string name="txtIconSeguidor">Icon Seguidores</string>
+
+
+    <string name="appwidget_text">Not fetched</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an example widget description</string>
 </resources>
