@@ -25,9 +25,10 @@
         android:layout_height="200dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/circo"
+        android:contentDescription="@string/TxTImgUser"
         app:layout_constraintEnd_toEndOf="@+id/ViewFundo"
         app:layout_constraintStart_toStartOf="@+id/ViewFundo"
-        app:layout_constraintTop_toTopOf="@+id/ViewFundo" />
+        app:layout_constraintTop_toTopOf="@+id/ViewFundo"/>
 
     <TextView
         android:id="@+id/nameUser"
@@ -48,13 +49,13 @@
 
     <TextView
         android:id="@+id/coloque_seu"
-        android:layout_width="235dp"
-        android:layout_height="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center_horizontal|top"
         android:textSize="16sp"
         android:layout_marginTop="32dp"
         android:textColor="@color/white"
-        android:text="Your NIckName"
+        android:text="@string/TxtSeuNick"
         app:layout_constraintEnd_toEndOf="@+id/ViewFundo"
         app:layout_constraintStart_toStartOf="@+id/ViewFundo"
         app:layout_constraintTop_toBottomOf="@+id/nameUser" />
@@ -62,14 +63,19 @@
     <EditText
         android:id="@+id/NicknameEdit"
         android:layout_width="244dp"
-        android:layout_height="38dp"
+        android:layout_height="48dp"
         android:layout_marginTop="32dp"
+        android:autofillHints=""
         android:background="@drawable/aredondado_edittext"
+        android:hint="@string/TxtSeuNick"
+        android:inputType="text"
         android:padding="10dp"
         android:textColor="@color/white"
+        android:textColorHint="@color/cinzaClaro"
         app:layout_constraintEnd_toEndOf="@+id/ViewFundo"
         app:layout_constraintStart_toStartOf="@+id/ViewFundo"
-        app:layout_constraintTop_toBottomOf="@+id/coloque_seu" />
+        app:layout_constraintTop_toBottomOf="@+id/coloque_seu"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <Button
         android:id="@+id/btnConsultarUserGit"
@@ -77,8 +83,8 @@
         android:layout_height="48dp"
         android:layout_marginTop="36dp"
         android:background="@drawable/aredondado"
-        android:text="@string/TxtConsulta"
         android:backgroundTint="@color/verde"
+        android:text="@string/TxtConsulta"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

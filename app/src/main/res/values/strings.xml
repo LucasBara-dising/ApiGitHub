@@ -2,6 +2,7 @@
     <string name="app_name">Api Github</string>
 
     <string name="TxtMostraHist">Historicos </string>
+    <string name="TxtSeuNick">Your NickName</string>
     <string name="TxtVerMais">Ver Mais </string>
     <string name="TxtConsulta">Consulta</string>
     <string name="TxTtodos_users">Todos Users ja pesquisados</string>
@@ -9,4 +10,9 @@
 
     <string name="TxTsetaVolta">Seta Volta</string>
     <string name="TxTImgGit">Logo Do GitHub</string>
+    <string name="TxTImgUser">Foto Do user</string>
+    <string name="TxTCompatilhar">Compartilhar</string>
+    <string name="txtIconempresa">Icon Empresa</string>
+    <string name="txtIconLocal">Icon Local</string>
+    <string name="txtIconSeguidor">Icon Seguidores</string>
 </resources>

@@ -18,9 +18,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.InputStream;
 import java.util.Locale;
 
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -108,8 +111,8 @@ public class MainActivity extends AppCompatActivity{
                     if (response.isSuccessful()) {
                         UserGit  userGit= response.body();
 
-                        //Uri uri= Uri.parse("https://avatars.githubusercontent.com/u/82176900?v=4");
-                        //ViewFotoUser.setImageURI(uri);
+                        //mostra foto via url
+                        Picasso.get().load(userGit.getAvatar_url()).transform(new CropCircleTransformation()).into(ViewFotoUser);
 
                         if(userGit.getName()==null){
                             nameUser.setText(userGit.getLogin());
@@ -161,6 +164,9 @@ public class MainActivity extends AppCompatActivity{
             //se não existir no banco cadastra
             if (userGit.getLogin().equals("naoExiste")) {
                 //insert
+                if(UserName.equals("")){
+                    UserName= userGit.getLogin();
+                }
                 db.addUser(new UserGit(UserNick, UserName));
                 TelaDados();
             }

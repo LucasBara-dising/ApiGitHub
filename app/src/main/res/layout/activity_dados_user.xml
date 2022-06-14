@@ -10,31 +10,32 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="50dp">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="50dp">
 
             <ImageView
                 android:id="@+id/viewFotoUser"
                 android:layout_width="222dp"
                 android:layout_height="213dp"
                 android:layout_marginTop="80dp"
-                android:background="@drawable/circo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/TxTImgUser" />
 
 
             <ImageButton
                 android:id="@+id/ImbBtnCompartilhar"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/share"
+                android:contentDescription="@string/TxTCompatilhar"
                 android:scaleType="fitCenter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +47,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:padding="16dp"
-                android:text="Historico"
+                android:text="@string/TxtMostraHist"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -94,7 +95,8 @@
                 android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toStartOf="@+id/twSeguidores"
                 app:layout_constraintTop_toBottomOf="@+id/twProjetos"
-                app:srcCompat="@drawable/seguidores" />
+                app:srcCompat="@drawable/seguidores"
+                android:contentDescription="@string/txtIconSeguidor" />
 
             <TextView
                 android:id="@+id/twSeguidores"
@@ -120,7 +122,8 @@
                 android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toStartOf="@+id/twSeguidores"
                 app:layout_constraintTop_toBottomOf="@+id/twSeguidores"
-                app:srcCompat="@drawable/predio" />
+                app:srcCompat="@drawable/predio"
+                android:contentDescription="@string/txtIconLocal" />
 
 
             <TextView
@@ -141,7 +144,8 @@
                 android:layout_marginStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imgPredio"
-                app:srcCompat="@drawable/local" />
+                app:srcCompat="@drawable/local"
+                android:contentDescription="@string/txtIconempresa" />
 
             <TextView
                 android:id="@+id/twLocalizacao"

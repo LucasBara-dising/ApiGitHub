@@ -15,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -97,10 +100,15 @@ public class Dados_User extends AppCompatActivity {
                         TextView twLocalizacao = findViewById(R.id.twLocalizacao);
                         TextView twUltupdate = findViewById(R.id.twUltupdate);
 
+                        ImageView viewFotoUser = findViewById(R.id.viewFotoUser);
                         ImageView imgPredio = findViewById(R.id.imgPredio);
                         ImageView imgLocal = findViewById(R.id.imgLocal);
 
                         Log.i("Link da Consulta No mostra Dados", linkNoMostradados);
+
+                        //mostra foto via url
+                        Picasso.get().load(userGit.getAvatar_url()).transform(new CropCircleTransformation()).into(viewFotoUser);
+
                         //dados
                         if (userGit.getName() == null) {
                             nameUser.setVisibility(View.GONE);
@@ -139,7 +147,8 @@ public class Dados_User extends AppCompatActivity {
                         String datanova = data.substring(0, 10);
                         String dataComBarra = datanova.replace("-", "/");
                         twUltupdate.setText("Ultimo Update: " + dataComBarra);
-                    } else {
+                    }
+                    else {
                         //alert para dizer que deu erro
                         //erro de limiti de pesquisas- Limite de 60 por hora
                         AlertDialog.Builder alert = new AlertDialog.Builder(Dados_User.this);
@@ -175,6 +184,7 @@ public class Dados_User extends AppCompatActivity {
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void onResponse(@NonNull Call<UserGit> call, @NonNull Response<UserGit> response) {
+                    Log.d("Code", String.valueOf(response.code()));
                     if (response.isSuccessful()) {
                         UserGit userGit = response.body();
 
@@ -260,4 +270,5 @@ public class Dados_User extends AppCompatActivity {
         HistUsers.putExtra("UserNick",UserNick);
         startActivity(HistUsers);
     }
+
 }
