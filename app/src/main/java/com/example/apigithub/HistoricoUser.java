@@ -2,7 +2,12 @@ package com.example.apigithub;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +27,10 @@ public class HistoricoUser extends AppCompatActivity {
     ArrayAdapter<String> adpater;
     ArrayList<String> arrayList;
     ListView ListViewUsers;
+
+    //giroscopio
+    SensorManager sensorManager;
+    Sensor sensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +44,10 @@ public class HistoricoUser extends AppCompatActivity {
         ListViewUsers.setAdapter(adpater);
 
         ListaTodosUsers();
+
+        //instancianod giroscopio
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
         //ao clicar no item da lista
         /*ListViewUsers = (ListView) findViewById(R.id.ListViewUsers);
@@ -59,13 +73,7 @@ public class HistoricoUser extends AppCompatActivity {
         BtnVoltaDados.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent NickName = getIntent();
-                String UserNick = NickName.getStringExtra("UserNick");
-
-                //envia nick para outra tela
-                Intent DadosUser = new Intent(getApplicationContext(), Dados_User.class);
-                DadosUser.putExtra("UserNick",UserNick);
-                startActivity(DadosUser);
+                VoltaParaDadosUser();
             }
         });
 
@@ -96,5 +104,41 @@ public class HistoricoUser extends AppCompatActivity {
             adpater.notifyDataSetChanged();
         }
     }
+
+    public  void VoltaParaDadosUser(){
+        Intent NickName = getIntent();
+        String UserNick = NickName.getStringExtra("UserNick");
+
+        //envia nick para outra tela
+        Intent DadosUser = new Intent(getApplicationContext(), Dados_User.class);
+        DadosUser.putExtra("UserNick",UserNick);
+        startActivity(DadosUser);
+    }
+
+
+    //sensor giroscopio
+    public void onResume() {
+        super.onResume();
+        sensorManager.registerListener(gyroListener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    public void onStop() {
+        super.onStop();
+        sensorManager.unregisterListener(gyroListener);
+    }
+
+    public SensorEventListener gyroListener = new SensorEventListener() {
+        public void onAccuracyChanged(Sensor sensor, int acc) {
+        }
+
+        public void onSensorChanged(SensorEvent event) {
+            float y = event.values[1];
+
+            if(y>4){
+                Toast.makeText(getApplicationContext(), "Não me balança doido >:", Toast.LENGTH_LONG).show();
+            }
+
+        }
+    };
 
 }
