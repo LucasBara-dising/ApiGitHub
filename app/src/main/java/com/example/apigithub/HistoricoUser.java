@@ -1,6 +1,8 @@
 package com.example.apigithub;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,10 +25,13 @@ import java.util.List;
 
 public class HistoricoUser extends AppCompatActivity {
 
-    BancoDeDados db=new BancoDeDados(this);
+    //BancoDeDados db=new BancoDeDados(this);
+    BancoDeDados db;
     ArrayAdapter<String> adpater;
-    ArrayList<String> arrayList;
+    ArrayList<UserGit> ListaUsers;
     ListView ListViewUsers;
+    RecyclerView recyclerView;
+    MyAdapter adpaterRecycler;
 
     //giroscopio
     SensorManager sensorManager;
@@ -38,12 +43,19 @@ public class HistoricoUser extends AppCompatActivity {
         setContentView(R.layout.activity_historico_user);
 
         //definição do arry que lista os users
-        arrayList = new ArrayList<String>();
-        adpater = new ArrayAdapter<String>(HistoricoUser.this, android.R.layout.simple_list_item_1, arrayList);
-        ListViewUsers = (ListView) findViewById(R.id.ListViewUsers);
-        ListViewUsers.setAdapter(adpater);
+        ListaUsers=new ArrayList<UserGit>();
+        db =new BancoDeDados(this);
+        ListaUsers= (ArrayList<UserGit>) db.ListaTodosUsers();
 
-        ListaTodosUsers();
+        //instancia o recycler
+        adpaterRecycler= new MyAdapter(ListaUsers,HistoricoUser.this);
+        recyclerView=findViewById(R.id.recyclerView);
+        //configura o recycler
+        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        recyclerView.setAdapter(adpaterRecycler);
+
 
         //instancianod giroscopio
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -90,19 +102,6 @@ public class HistoricoUser extends AppCompatActivity {
                 startActivity(getIntent());
             }
         });
-    }
-
-    public void ListaTodosUsers() {
-        List<UserGit> TodosUsers = db.ListaTodosUsers();
-
-        //loop para mostrar tudo
-        for (UserGit c : TodosUsers) {
-            //corpo do item list
-            arrayList.add("NickName: " + c.getLogin() + "\n" +
-                          "Nome: " + c.getName() + "\n");
-
-            adpater.notifyDataSetChanged();
-        }
     }
 
     public  void VoltaParaDadosUser(){

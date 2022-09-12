@@ -33,10 +33,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity{
     //Link api
     private final String URL = "https://api.github.com/users/";
+    //private final String URLAPIPropria = "https://192.168.0.104:44368/api/User/MostraUser?Login_Usu=";
 
     BancoDeDados db=new BancoDeDados(this);
 
     private Retrofit retrofitGit;
+    private Retrofit retrofitGitPropria;
     private Button btnConsultarUserGit;
     private EditText NicknameEdit;
     private TextView nameUser;
@@ -80,7 +82,9 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
-    private void consultarUser() {
+    /*
+    private void consultaUserAPIProp() {
+
 
         // Verifica o status da conexão de rede
         ConnectivityManager connMgr = (ConnectivityManager)
@@ -91,6 +95,69 @@ public class MainActivity extends AppCompatActivity{
         }
 
         if (networkInfo != null && networkInfo.isConnected()){
+            //pega nickname
+            String slogin = NicknameEdit.getText().toString().trim();
+
+            String linkPropria= URLAPIPropria+slogin;
+
+            //instanciando a interface
+            RESTService restService1 = retrofitGitPropria.create(RESTService.class);
+
+            //passando os dados para consulta
+            Call<UserGitApiPropia> call= restService1.consultaUserAPIProp(slogin);
+            //Log.i("Link da Consulta", link);
+
+            nameUser.setVisibility(View.VISIBLE);
+            //colocando a requisição na fila para execução
+            call.enqueue(new Callback<UserGitApiPropia>() {
+                @Override
+                public void onResponse(Call<UserGitApiPropia> call, Response<UserGitApiPropia> response) {
+                    if (response.isSuccessful()) {
+                        UserGitApiPropia  userGitApiPropia= response.body();
+
+                        //mostra foto via url
+                        Picasso.get().load(userGitApiPropia.getAvatar_url()).transform(new CropCircleTransformation()).into(ViewFotoUser);
+
+                        if(userGitApiPropia.getName()==null){
+                            nameUser.setText(userGitApiPropia.getLogin());
+                        }
+                        else {
+                            nameUser.setText(userGitApiPropia.getName());
+                        }
+                        Toast.makeText(getApplicationContext(), "User encontrado", Toast.LENGTH_LONG).show();
+                    }
+
+                    else{
+                        //alert para dizer que deu erro
+                        //erro de limiti de pesquisas- Limite de 60 por hora
+                        /*AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                        alert.setTitle("Ops :/");
+                        alert.setMessage("User não encontrado");
+                        alert.setPositiveButton("OK",null);
+                        alert.show();
+
+                        onPause();
+                        //chamo api ofical
+                        consultarUser();
+
+                    }
+                }
+
+
+                @Override
+                public void onFailure(Call<UserGitApiPropia> call, Throwable t) {
+                    //chamo api ofical
+                    consultarUser();
+                }
+            });
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "Sem Conexão", Toast.LENGTH_LONG).show();
+        }
+    }*/
+
+    private void consultarUser() {
+
             //pega nickname
             String slogin = NicknameEdit.getText().toString().trim();
 
@@ -142,16 +209,13 @@ public class MainActivity extends AppCompatActivity{
                 }
             });
         }
-        else{
-            Toast.makeText(getApplicationContext(), "Sem Conexão", Toast.LENGTH_LONG).show();
-        }
-    }
+
 
     public  void InseriUser(){
         String UserNick = NicknameEdit.getText().toString().toLowerCase(Locale.ROOT);
 
         if(UserNick.equals("")){
-            Toast.makeText(getApplicationContext(), "Freencha o campo", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Preencha o campo", Toast.LENGTH_LONG).show();
         }
         else {
             consultarUser();
@@ -167,7 +231,7 @@ public class MainActivity extends AppCompatActivity{
                 if(UserName.equals("")){
                     UserName= userGit.getLogin();
                 }
-                db.addUser(new UserGit(UserNick, UserName));
+                db.addUser(new UserGit(UserNick, UserName, userGit.getAvatar_url()));
                 TelaDados();
             }
             //se ja existir abre a outra tela direto

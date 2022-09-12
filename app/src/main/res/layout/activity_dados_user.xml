@@ -54,7 +54,7 @@
 
 
             <TextView
-                android:id="@+id/twloginUser"
+                android:id="@+id/twName"
                 style="@style/TxtBase"
                 android:text=""
                 android:textColor="@color/white"
@@ -63,13 +63,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/viewFotoUser" />
 
             <TextView
-                android:id="@+id/twName"
+                android:id="@+id/twloginUser"
                 style="@style/TxtBase"
-                android:layout_marginTop="2dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="10dp"
+                android:textSize="14sp"
                 android:text=""
                 android:textColor="@color/cinzaClaro"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/twloginUser" />
+                app:layout_constraintTop_toBottomOf="@+id/twName" />
 
             <TextView
                 android:id="@+id/twbio"
@@ -77,8 +79,9 @@
                 android:layout_width="match_parent"
                 android:text=""
                 android:textColor="@color/white"
+                android:paddingEnd="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/twName" />
+                app:layout_constraintTop_toBottomOf="@+id/twloginUser" />
 
             <TextView
                 android:id="@+id/twProjetos"
@@ -107,55 +110,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/twProjetos" />
 
-            <TextView
-                android:id="@+id/twSeguindo"
-                style="@style/TxtBase"
-                android:text=""
-                android:textColor="@color/white"
-                app:layout_constraintStart_toEndOf="@+id/twSeguidores"
-                app:layout_constraintTop_toBottomOf="@+id/twProjetos" />
-
-            <ImageView
-                android:id="@+id/imgPredio"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintEnd_toStartOf="@+id/twSeguidores"
-                app:layout_constraintTop_toBottomOf="@+id/twSeguidores"
-                app:srcCompat="@drawable/predio"
-                android:contentDescription="@string/txtIconLocal" />
-
-
-            <TextView
-                android:id="@+id/twEmpresa"
-                style="@style/TxtBase"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:text=""
-                android:textColor="@color/white"
-                app:layout_constraintStart_toEndOf="@+id/imgPredio"
-                app:layout_constraintTop_toBottomOf="@+id/imgSeguidor" />
-
-            <ImageView
-                android:id="@+id/imgLocal"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgPredio"
-                app:srcCompat="@drawable/local"
-                android:contentDescription="@string/txtIconempresa" />
-
-            <TextView
-                android:id="@+id/twLocalizacao"
-                style="@style/TxtBase"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="25dp"
-                android:text=""
-                android:textColor="@color/white"
-                app:layout_constraintStart_toEndOf="@+id/imgLocal"
-                app:layout_constraintTop_toBottomOf="@+id/twEmpresa" />
 
             <TextView
                 android:id="@+id/twUltupdate"
@@ -163,7 +117,7 @@
                 android:text=""
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/twLocalizacao" />
+                app:layout_constraintTop_toBottomOf="@+id/imgSeguidor" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

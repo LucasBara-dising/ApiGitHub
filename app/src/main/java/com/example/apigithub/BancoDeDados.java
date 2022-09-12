@@ -15,6 +15,7 @@ public class BancoDeDados  extends SQLiteOpenHelper {
     public static final String Tabela_User = "tbUsers";
     public static final String Coluna_LoginUser = "LoginUser";
     public static final String Coluna_NomeUser = "nomeUser";
+    public static final String Coluna_FotoUser = "fotoUser";
 
     private static final String DATABASE_Nome = "BDGitUsers.db";
     private static final int DATABASE_VERSION = 1;
@@ -27,7 +28,8 @@ public class BancoDeDados  extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String Criacao_tabelaUser = "create table " + Tabela_User + "( "
                 + Coluna_LoginUser + " text primary key, "
-                + Coluna_NomeUser + " text not null);";
+                + Coluna_NomeUser + " text not null, "
+                + Coluna_FotoUser + " text not null);";
 
         //executa a criaça da tb user sqlite
         db.execSQL(Criacao_tabelaUser);
@@ -47,6 +49,7 @@ public class BancoDeDados  extends SQLiteOpenHelper {
         ContentValues values= new ContentValues();
         values.put(Coluna_LoginUser, userGit.getLogin());
         values.put(Coluna_NomeUser, userGit.getName());
+        values.put(Coluna_FotoUser, userGit.getName());
 
         //inseri no banco
         db.insert(Tabela_User, null, values);
@@ -58,19 +61,19 @@ public class BancoDeDados  extends SQLiteOpenHelper {
         SQLiteDatabase db=this.getReadableDatabase();
 
         Cursor cursor=db.query(Tabela_User,
-                new String[]{Coluna_LoginUser, Coluna_NomeUser},
+                new String[]{Coluna_LoginUser, Coluna_NomeUser,Coluna_FotoUser},
                 Coluna_LoginUser+"=?",new String[]{String.valueOf(login)},null, null, null,null);
         if(cursor!=null && cursor.getCount()>0){
             cursor.moveToFirst();
         }
 
         else if(cursor.getCount() == 0){
-            UserGit userGitEspecifico= new UserGit("naoExiste", "naoExiste");
+            UserGit userGitEspecifico= new UserGit("naoExiste", "naoExiste","naoExiste");
             return userGitEspecifico;
         }
 
 
-        UserGit userGitEspecifico= new UserGit(cursor.getString(0), cursor.getString(1));
+        UserGit userGitEspecifico= new UserGit(cursor.getString(0), cursor.getString(1), cursor.getString(2));
         return userGitEspecifico;
 
     }
@@ -90,6 +93,7 @@ public class BancoDeDados  extends SQLiteOpenHelper {
                 UserGit userGit= new UserGit();
                 userGit.setLogin(c.getString(0));
                 userGit.setName(c.getString(1));
+                userGit.setName(c.getString(2));
 
                 ListaUsers.add(userGit);
 

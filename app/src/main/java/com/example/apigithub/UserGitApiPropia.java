@@ -3,7 +3,7 @@ package com.example.apigithub;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserGit {
+public class UserGitApiPropia {
 
     @SerializedName("login")
     @Expose
@@ -37,14 +37,14 @@ public class UserGit {
     @Expose
     private String ultimoComit;
 
+
     //nessecario para o banco inserir
-    public UserGit(String vUserNick, String vUserName, String vFotoUser) {
+    public UserGitApiPropia(String vUserNick, String vUserName) {
         this.login=vUserNick;
         this.name=vUserName;
-        this.avatar_url=vFotoUser;
     }
 
-    public UserGit() {
+    public UserGitApiPropia() {
 
     }
 

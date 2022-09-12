@@ -95,14 +95,9 @@ public class Dados_User extends AppCompatActivity {
                         TextView twbio = findViewById(R.id.twbio);
                         TextView twProjetos = findViewById(R.id.twProjetos);
                         TextView twSeguidores = findViewById(R.id.twSeguidores);
-                        TextView twSeguindo = findViewById(R.id.twSeguindo);
-                        TextView twEmpresa = findViewById(R.id.twEmpresa);
-                        TextView twLocalizacao = findViewById(R.id.twLocalizacao);
                         TextView twUltupdate = findViewById(R.id.twUltupdate);
 
                         ImageView viewFotoUser = findViewById(R.id.viewFotoUser);
-                        ImageView imgPredio = findViewById(R.id.imgPredio);
-                        ImageView imgLocal = findViewById(R.id.imgLocal);
 
                         Log.i("Link da Consulta No mostra Dados", linkNoMostradados);
 
@@ -125,23 +120,8 @@ public class Dados_User extends AppCompatActivity {
                         }
 
                         twProjetos.setText("Projetos Publicados: " + userGit.getPublic_project());
-                        twSeguidores.setText("Seguidores: " + userGit.getFollowers());
-                        twSeguindo.setText("Seguindo: " + userGit.getFollowing());
+                        twSeguidores.setText("Seguidores: " + userGit.getFollowers()+ "   Seguindo: " + userGit.getFollowing());
 
-
-                        if (userGit.getCompany() == null) {
-                            twEmpresa.setVisibility(View.GONE);
-                            imgPredio.setVisibility(View.GONE);
-                        } else {
-                            twEmpresa.setText("Compania: " + userGit.getCompany());
-                        }
-
-                        if (userGit.getLocation() == null) {
-                            twLocalizacao.setVisibility(View.GONE);
-                            imgLocal.setVisibility(View.GONE);
-                        } else {
-                            twLocalizacao.setText("Localização: " + userGit.getLocation());
-                        }
 
                         String data = userGit.getUltimoComit();
                         String datanova = data.substring(0, 10);
@@ -149,101 +129,6 @@ public class Dados_User extends AppCompatActivity {
                         twUltupdate.setText("Ultimo Update: " + dataComBarra);
                     }
                     else {
-                        //alert para dizer que deu erro
-                        //erro de limiti de pesquisas- Limite de 60 por hora
-                        AlertDialog.Builder alert = new AlertDialog.Builder(Dados_User.this);
-                        alert.setTitle("Ops :/");
-                        alert.setMessage("Ocorreu um erro");
-                        alert.setPositiveButton("OK", null);
-                        alert.show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<UserGit> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(), "Ocorreu um erro ao tentar consultar o Perfil. Erro: " + t.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
-        }else{
-            String URL = "https://api.github.com/users/";
-            String linkNoMostradados = URL + UserNickFromHist;
-
-            Log.d("Log Foi Do hist",linkNoMostradados);
-
-            //configura os recursos do retrofit com a api
-            Retrofit retrofitGit = new Retrofit.Builder().baseUrl(URL).addConverterFactory(GsonConverterFactory.create()).build();
-
-            //instanciando a interface
-            RESTService restService = retrofitGit.create(RESTService.class);
-
-            //passando os dados para consulta
-            Call<UserGit> call = restService.consultaUser(UserNickFromHist);
-
-            //colocando a requisição na fila para execução
-            call.enqueue(new Callback<UserGit>() {
-                @SuppressLint("SetTextI18n")
-                @Override
-                public void onResponse(@NonNull Call<UserGit> call, @NonNull Response<UserGit> response) {
-                    Log.d("Code", String.valueOf(response.code()));
-                    if (response.isSuccessful()) {
-                        UserGit userGit = response.body();
-
-                        TextView nameUser = findViewById(R.id.twName);
-                        TextView twloginUser = findViewById(R.id.twloginUser);
-                        TextView twbio = findViewById(R.id.twbio);
-                        TextView twProjetos = findViewById(R.id.twProjetos);
-                        TextView twSeguidores = findViewById(R.id.twSeguidores);
-                        TextView twSeguindo = findViewById(R.id.twSeguindo);
-                        TextView twEmpresa = findViewById(R.id.twEmpresa);
-                        TextView twLocalizacao = findViewById(R.id.twLocalizacao);
-                        TextView twUltupdate = findViewById(R.id.twUltupdate);
-
-                        ImageView imgPredio = findViewById(R.id.imgPredio);
-                        ImageView imgLocal = findViewById(R.id.imgLocal);
-
-                        Log.i("Link da Consulta No mostra Dados", linkNoMostradados);
-                        //dados
-                        if (userGit.getName() == null) {
-                            nameUser.setVisibility(View.GONE);
-                        } else {
-                            nameUser.setText(userGit.getName());
-                        }
-
-                        twloginUser.setText(userGit.getLogin());
-
-                        if (userGit.getBio() == null) {
-                            twbio.setVisibility(View.GONE);
-                        } else {
-                            twbio.setText("Bio: " + userGit.getBio());
-                        }
-
-                        twProjetos.setText("Projetos Publicados: " + userGit.getPublic_project());
-                        twSeguidores.setText("Seguidores: " + userGit.getFollowers());
-                        twSeguindo.setText("Seguindo: " + userGit.getFollowing());
-
-
-                        if (userGit.getCompany() == null) {
-                            twEmpresa.setVisibility(View.GONE);
-                            imgPredio.setVisibility(View.GONE);
-                        } else {
-                            twEmpresa.setText("Compania: " + userGit.getCompany());
-                        }
-
-                        if (userGit.getLocation() == null) {
-                            twLocalizacao.setVisibility(View.GONE);
-                            imgLocal.setVisibility(View.GONE);
-                        } else {
-                            twLocalizacao.setText("Localização: " + userGit.getLocation());
-                        }
-
-                        String data = userGit.getUltimoComit();
-                        String datanova = data.substring(0, 10);
-                        String dataComBarra = datanova.replace("-", "/");
-                        twUltupdate.setText("Ultimo Update: " + dataComBarra);
-                    }
-
-                    else {
-                        Log.d("corpo", String.valueOf(response.code()));
                         //alert para dizer que deu erro
                         //erro de limiti de pesquisas- Limite de 60 por hora
                         AlertDialog.Builder alert = new AlertDialog.Builder(Dados_User.this);
