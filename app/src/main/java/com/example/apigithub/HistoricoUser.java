@@ -1,16 +1,30 @@
 package com.example.apigithub;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,16 +34,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class HistoricoUser extends AppCompatActivity {
 
-    //BancoDeDados db=new BancoDeDados(this);
     BancoDeDados db;
-    ArrayAdapter<String> adpater;
     ArrayList<UserGit> ListaUsers;
-    ListView ListViewUsers;
     RecyclerView recyclerView;
     MyAdapter adpaterRecycler;
 
@@ -37,21 +50,25 @@ public class HistoricoUser extends AppCompatActivity {
     SensorManager sensorManager;
     Sensor sensor;
 
+    //localização
+    LocationManager locationMangaer = null;
+    LocationListener locationListener = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historico_user);
 
         //definição do arry que lista os users
-        ListaUsers=new ArrayList<UserGit>();
-        db =new BancoDeDados(this);
-        ListaUsers= (ArrayList<UserGit>) db.ListaTodosUsers();
+        ListaUsers = new ArrayList<UserGit>();
+        db = new BancoDeDados(this);
+        ListaUsers = (ArrayList<UserGit>) db.ListaTodosUsers();
 
         //instancia o recycler
-        adpaterRecycler= new MyAdapter(ListaUsers,HistoricoUser.this);
-        recyclerView=findViewById(R.id.recyclerView);
+        adpaterRecycler = new MyAdapter(ListaUsers, HistoricoUser.this);
+        recyclerView = findViewById(R.id.recyclerView);
         //configura o recycler
-        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         recyclerView.setAdapter(adpaterRecycler);
@@ -81,7 +98,7 @@ public class HistoricoUser extends AppCompatActivity {
         });*/
 
         //volta para os dados
-        ImageButton BtnVoltaDados= (ImageButton) findViewById(R.id.BtnVoltaDados);
+        ImageButton BtnVoltaDados = (ImageButton) findViewById(R.id.BtnVoltaDados);
         BtnVoltaDados.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,26 +108,30 @@ public class HistoricoUser extends AppCompatActivity {
 
 
         //button para apagar historico
-        TextView btnApagaHist= (TextView) findViewById(R.id.btnApagaHist);
+        TextView btnApagaHist = (TextView) findViewById(R.id.btnApagaHist);
         btnApagaHist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               //apaga historico
-               db.ApagaTodosusers();
-               //recarrega a pagina
+                //apaga historico
+                db.ApagaTodosusers();
+                //recarrega a pagina
                 finish();
                 startActivity(getIntent());
             }
         });
+
+
+        //Localização
+        locationMangaer = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     }
 
-    public  void VoltaParaDadosUser(){
+    public void VoltaParaDadosUser() {
         Intent NickName = getIntent();
         String UserNick = NickName.getStringExtra("UserNick");
 
         //envia nick para outra tela
         Intent DadosUser = new Intent(getApplicationContext(), Dados_User.class);
-        DadosUser.putExtra("UserNick",UserNick);
+        DadosUser.putExtra("UserNick", UserNick);
         startActivity(DadosUser);
     }
 
@@ -132,12 +153,113 @@ public class HistoricoUser extends AppCompatActivity {
 
         public void onSensorChanged(SensorEvent event) {
             float y = event.values[1];
+            float x = event.values[0];
 
-            if(y>4){
+            // se jogar  celular de lado
+            if (y > 4) {
                 Toast.makeText(getApplicationContext(), "Não me balança doido >:", Toast.LENGTH_LONG).show();
+            }
+
+            //se mover para cma ou baixo
+            if(x>3 || x<-3){
+                Toast.makeText(getApplicationContext(), "Isso pode demorar", Toast.LENGTH_LONG).show();
+                Boolean flag = displayGpsStatus();
+                if (flag) {
+
+                    if(ContextCompat.checkSelfPermission(HistoricoUser.this, android.Manifest.permission.ACCESS_FINE_LOCATION) ==
+                            PackageManager.PERMISSION_GRANTED &&
+                            ContextCompat.checkSelfPermission(HistoricoUser.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                                    PackageManager.PERMISSION_GRANTED) {
+
+                        LocationListener locationListener = new MyLocation();
+                        locationMangaer.requestLocationUpdates(LocationManager
+                                .GPS_PROVIDER, 5000, 10, locationListener);
+
+                    } else {
+                        Toast.makeText(getApplicationContext(), "não tem permissão ", Toast.LENGTH_LONG).show();
+                        checkLocationPermission();
+                    }
+
+                } else {
+                    Log.i("Gps Status!!", "Your GPS is: OFF");
+                }
             }
 
         }
     };
+
+    //verifica se o gps ta ligado
+    public Boolean displayGpsStatus(){
+        ContentResolver contentResolver= getBaseContext().getContentResolver();
+        boolean gpsStaus= Settings.Secure.isLocationProviderEnabled(contentResolver,LocationManager.GPS_PROVIDER);
+
+        return gpsStaus;
+    }
+
+    //recebe as cordenadas
+    public  class  MyLocation implements LocationListener{
+
+        @Override
+        public void onLocationChanged(@NonNull Location location) {
+
+            String longitude = "Longitude: " +location.getLongitude();
+            Log.i("Longitude: ", longitude);
+            String latitude = "Latitude: " +location.getLatitude();
+            Log.v("Latitude: ", latitude);
+
+            String cidade=null;
+            Geocoder geocoder= new Geocoder(getBaseContext(), Locale.getDefault());
+
+            List<Address> addresses;
+            try{
+                addresses=geocoder.getFromLocation(location.getLatitude(), location.getLongitude(),1);
+                if(addresses.size()>0){
+                    cidade=addresses.get(0).getLocality();
+                    Log.v("cidade: ", "city: "+cidade);
+                    String scity="city: "+cidade;
+
+                    //alert para dizer coodenadas
+                    AlertDialog.Builder alert = new AlertDialog.Builder(HistoricoUser.this);
+                    alert.setTitle("Sua Coordanada :)");
+                    alert.setMessage(longitude+"\n "+latitude + "\n"+scity);
+                    alert.setPositiveButton("OK",null);
+                    alert.show();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //checa permissao
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    private void checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                new AlertDialog.Builder(this)
+                        .setTitle("Permissão de Localização nessesaria")
+                        .setMessage("Esta Função nessesita da localização para funcionar")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ActivityCompat.requestPermissions(HistoricoUser.this,
+                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                        MY_PERMISSIONS_REQUEST_LOCATION );
+                            }
+                        })
+                        .create()
+                        .show();
+            } else {
+                //soliita permissao
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION );
+            }
+        }
+    }
 
 }

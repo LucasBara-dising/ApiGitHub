@@ -14,27 +14,12 @@
         android:backgroundTint="@color/cinza"
         android:background="@drawable/item_border">
 
-        <!-- icon -->
-        <ImageView
-            android:id="@+id/item_icon"
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="1dp"
-            android:contentDescription="icon"
-            android:src="@drawable/logogit"
-            />
 
         <!-- title -->
         <TextView
             android:id="@+id/item_nome"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/item_icon"
-            android:layout_alignBaseline="@+id/item_icon"
             android:textColor="@android:color/white"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
@@ -47,9 +32,7 @@
             android:id="@+id/item_Login"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/item_icon"
             android:layout_below="@+id/item_nome"
-            android:layout_alignBaseline="@+id/item_icon"
             android:textColor="@android:color/holo_blue_dark"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
