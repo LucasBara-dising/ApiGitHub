@@ -48,6 +48,9 @@ public class UserGit {
 
     }
 
+    public UserGit(String login, String avatar_url, String name, String bio, String public_project, String followers, String following, String ultimoComit) {
+    }
+
 
     //construtores
     public String getLogin() {
@@ -73,7 +76,6 @@ public class UserGit {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public String getBio() {
         return bio;

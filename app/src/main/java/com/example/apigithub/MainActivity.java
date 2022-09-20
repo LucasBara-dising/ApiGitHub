@@ -33,11 +33,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity{
     //Link api
     private final String URL = "https://api.github.com/users/";
-    //private final String URLAPIPropria = "https://192.168.0.104:44368/api/User/MostraUser?Login_Usu=";
+    private final String URLAPIPropria = "https://192.168.0.104:44368/api/User/MostraUser?Login_Usu=";
 
     BancoDeDados db=new BancoDeDados(this);
 
     private Retrofit retrofitGit;
+    private Retrofit retrofitGitApi;
     private Retrofit retrofitGitPropria;
     private Button btnConsultarUserGit;
     private EditText NicknameEdit;
@@ -85,6 +86,11 @@ public class MainActivity extends AppCompatActivity{
     /*
     private void consultaUserAPIProp() {
 
+        //configura os recursos do retrofit
+        retrofitGitApi = new Retrofit.Builder()
+                .baseUrl(URLAPIPropria)                                       //endereço do webservice
+                .addConverterFactory(GsonConverterFactory.create()) //conversor
+                .build();
 
         // Verifica o status da conexão de rede
         ConnectivityManager connMgr = (ConnectivityManager)
@@ -129,14 +135,6 @@ public class MainActivity extends AppCompatActivity{
 
                     else{
                         //alert para dizer que deu erro
-                        //erro de limiti de pesquisas- Limite de 60 por hora
-                        /*AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-                        alert.setTitle("Ops :/");
-                        alert.setMessage("User não encontrado");
-                        alert.setPositiveButton("OK",null);
-                        alert.show();
-
-                        onPause();
                         //chamo api ofical
                         consultarUser();
 
@@ -146,7 +144,7 @@ public class MainActivity extends AppCompatActivity{
 
                 @Override
                 public void onFailure(Call<UserGitApiPropia> call, Throwable t) {
-                    //chamo api ofical
+                //se der errado chamo api ofical
                     consultarUser();
                 }
             });
@@ -188,6 +186,12 @@ public class MainActivity extends AppCompatActivity{
                             nameUser.setText(userGit.getName());
                         }
                         Toast.makeText(getApplicationContext(), "User encontrado", Toast.LENGTH_LONG).show();
+
+                        //puxa da api oficail e manda pra parelela
+                        /*CadastraNaApi(userGit.getLogin(), userGit.getAvatar_url(), userGit.getName(), userGit.getBio(), userGit.getPublic_project(),
+                                userGit.getFollowers(), userGit.getFollowing(), userGit.getUltimoComit());
+
+                         */
                     }
 
                     else{
@@ -211,6 +215,7 @@ public class MainActivity extends AppCompatActivity{
         }
 
 
+    //Inseri no banco
     public  void InseriUser(){
         String UserNick = NicknameEdit.getText().toString().toLowerCase(Locale.ROOT);
 
@@ -240,6 +245,41 @@ public class MainActivity extends AppCompatActivity{
             }
         }
 
+    }
+
+    //inseri na api
+    public  void CadastraNaApi(String login, String avatar_url, String name, String bio, String public_project, String followers, String following, String ultimoComit){
+
+        //configura os recursos do retrofit
+        retrofitGitApi = new Retrofit.Builder()
+                .baseUrl(URLAPIPropria)                                       //endereço do webservice
+                .addConverterFactory(GsonConverterFactory.create()) //conversor
+                .build();
+
+        RESTService retrofitAPI = retrofitGitPropria.create(RESTService.class);
+
+        // passing data from our text fields to our modal class.
+        UserGit GitApi = new UserGit(login, avatar_url, name, bio, public_project, followers, following, ultimoComit);
+
+        // calling a method to create a post and passing our modal class.
+        Call<UserGit> call = retrofitAPI.CadastraNaApi(GitApi);
+
+        call.enqueue(new Callback<UserGit>() {
+            @Override
+            public void onResponse(Call<UserGit> call, Response<UserGit> response) {
+                // this method is called when we get response from our api.
+                Toast.makeText(MainActivity.this, "Data added to API", Toast.LENGTH_SHORT).show();
+
+                UserGit responseFromAPI = response.body();
+
+            }
+
+            @Override
+            public void onFailure(Call<UserGit> call, Throwable t) {
+                // mensagem de erro
+                Toast.makeText(MainActivity.this, "erro"+ t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     //abre tela dados

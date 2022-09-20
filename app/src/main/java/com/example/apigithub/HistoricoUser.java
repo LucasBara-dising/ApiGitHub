@@ -163,25 +163,24 @@ public class HistoricoUser extends AppCompatActivity {
             //se mover para cma ou baixo
             if(x>3 || x<-3){
                 Toast.makeText(getApplicationContext(), "Isso pode demorar", Toast.LENGTH_LONG).show();
-                Boolean flag = displayGpsStatus();
-                if (flag) {
+                Boolean StatusGPS = displayGpsStatus();
+                if (StatusGPS) {
 
-                    if(ContextCompat.checkSelfPermission(HistoricoUser.this, android.Manifest.permission.ACCESS_FINE_LOCATION) ==
-                            PackageManager.PERMISSION_GRANTED &&
-                            ContextCompat.checkSelfPermission(HistoricoUser.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) ==
-                                    PackageManager.PERMISSION_GRANTED) {
+                        if(ContextCompat.checkSelfPermission(HistoricoUser.this, android.Manifest.permission.ACCESS_FINE_LOCATION) ==
+                                PackageManager.PERMISSION_GRANTED &&
+                                ContextCompat.checkSelfPermission(HistoricoUser.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                                        PackageManager.PERMISSION_GRANTED) {
 
-                        LocationListener locationListener = new MyLocation();
-                        locationMangaer.requestLocationUpdates(LocationManager
-                                .GPS_PROVIDER, 5000, 10, locationListener);
+                            LocationListener locationListener = new MyLocation();
+                            locationMangaer.requestLocationUpdates(LocationManager
+                                    .GPS_PROVIDER, 5000, 10, locationListener);
 
-                    } else {
-                        Toast.makeText(getApplicationContext(), "não tem permissão ", Toast.LENGTH_LONG).show();
-                        checkLocationPermission();
-                    }
-
+                        } else {
+                            Toast.makeText(getApplicationContext(), "não tem permissão ", Toast.LENGTH_LONG).show();
+                            checkLocationPermission();
+                        }
                 } else {
-                    Log.i("Gps Status!!", "Your GPS is: OFF");
+                    Toast.makeText(getApplicationContext(), "Liga o GPS", Toast.LENGTH_LONG).show();
                 }
             }
 
