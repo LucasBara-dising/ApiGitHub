@@ -15,8 +15,8 @@ APP para mostrar uses do GitHub usando a API do Github
  # Telas
  <br>
  <img src="https://raw.githubusercontent.com/LucasBara-dising/ApiGitHub/master/Screenshot_20220614-150206.png" alt="Tela de consulta " width="300px"/>
- <img src="https://github.com/LucasBara-dising/ApiGitHub/blob/master/Screenshot_20220614-150229.png" alt="Tela de detlhes " width="300px"/>
- <img src="https://github.com/LucasBara-dising/ApiGitHub/blob/master/Screenshot_20220614-150236.png" alt="Tela de Historico " width="300px"/>
+ <img src="https://github.com/LucasBara-dising/ApiGitHub/blob/master/Screenshot_20220922-101841.png" alt="Tela de detlhes " width="300px"/>
+ <img src="https://github.com/LucasBara-dising/ApiGitHub/blob/master/Screenshot_20220922-101849.png" alt="Tela de Historico " width="300px"/>
  
  # Tecnologias
  Sessão de frameworks/liblotes usadas no App junto com as tecnologias usadas
