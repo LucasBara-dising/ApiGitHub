@@ -11,8 +11,7 @@ APP para mostrar uses do GitHub usando a API do Github
 
 # Sobre
  Sobre o APP: É um aplicativo onde é possivel consultar perfis do github, consultando tambem é possivel ver detalhes como quantidade de projetos, bio entre outras coisa. 
- Tambem é possivel compartilhar o link do perfil do usuario. O app tambe conta com uma tela de historicos onde ficam armazenados os perfis ja consultados. 
- 
+ Tambem é possivel compartilhar o link do perfil do usuario. O app tambe conta com uma tela de historicos onde ficam armazenados os perfis ja consultados. O Aplicativo é acompanhado da conexão de com uma API do Github criada de forma paralela a original, que alimenatada pela APi oficial do Github.
  # Telas
  <br>
  <img src="https://raw.githubusercontent.com/LucasBara-dising/ApiGitHub/master/Screenshot_20220614-150206.png" alt="Tela de consulta " width="300px"/>
@@ -26,9 +25,11 @@ APP para mostrar uses do GitHub usando a API do Github
 * [Api GitHub](https://docs.github.com/pt/developers/overview/about-githubs-apis)
 * [Picasso](https://square.github.io/picasso/)
 * [Retrofit](https://square.github.io/retrofit/)
+* [API parelela do Github](https://github.com/LucasBara-dising/WebAPIGitHub)
 
 # Contribuidores <3
 * [Lucas](https://github.com/LucasBara-dising)
 * [Kaio](https://github.com/otaldoeu)
+* [Mathues Pessoa](https://github.com/Matheus-Pessoa-Oliveira)
 
 Feito com :heart: e Android.
