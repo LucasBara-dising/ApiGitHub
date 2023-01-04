@@ -14,9 +14,11 @@ APP para mostrar uses do GitHub usando a API do Github
  Tambem é possivel compartilhar o link do perfil do usuario. O app tambe conta com uma tela de historicos onde ficam armazenados os perfis ja consultados. O Aplicativo é acompanhado da conexão de com uma API do Github criada de forma paralela a original, que alimenatada pela APi oficial do Github.
  # Telas
  <br>
- <img src="https://raw.githubusercontent.com/LucasBara-dising/ApiGitHub/master/Screenshot_20220614-150206.png" alt="Tela de consulta " width="300px"/>
- <img src="https://github.com/LucasBara-dising/ApiGitHub/blob/master/Screenshot_20220922-101841.png" alt="Tela de detlhes " width="300px"/>
- <img src="https://github.com/LucasBara-dising/ApiGitHub/blob/master/Screenshot_20220922-101849.png" alt="Tela de Historico " width="300px"/>
+ <div>
+  <img src="https://raw.githubusercontent.com/LucasBara-dising/ApiGitHub/master/Screenshot_20220614-150206.png" alt="Tela de consulta " width="250px"/>
+  <img src="https://github.com/LucasBara-dising/ApiGitHub/blob/master/Screenshot_20220922-101841.png" alt="Tela de detlhes " width="250px"/>
+  <img src="https://github.com/LucasBara-dising/ApiGitHub/blob/master/Screenshot_20220922-101849.png" alt="Tela de Historico " width="250px"/>
+ </div>
  
  # Tecnologias
  Sessão de frameworks/liblotes usadas no App junto com as tecnologias usadas
